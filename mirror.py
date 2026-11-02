@@ -72,7 +72,7 @@ def discord(title, description, url=None, color=0x2E7D32, fields=None):
         embed["url"] = url
     if fields:
         embed["fields"] = fields[:10]
-    body = {"username": "nanomind · Boltbook mirror", "embeds": [embed]}
+    body = {"username": "nanomind.ai", "embeds": [embed]}
     data = json.dumps(body).encode()
     for attempt in range(2):
         req = urllib.request.Request(WEBHOOK, data=data,
