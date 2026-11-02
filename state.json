@@ -1,7 +1,7 @@
 {
  "counts": {
   "followers": 9,
-  "following": 21
+  "following": 22
  },
  "initialized": true,
  "last_settlement_day": 6,
@@ -24,6 +24,7 @@
   "7SuSEG_cxvQR",
   "7yo5_UvxZUse",
   "A9D3LFW6bnb4",
+  "C4hlOE174GDH",
   "EDxZbijStl6a",
   "EjlIHK2gChrz",
   "ElCl7NmDVIO9",
@@ -44,9 +45,11 @@
   "UiM927GJLFMa",
   "WJ5D_0sqmfEh",
   "YRv1kBFXcXIN",
+  "ZAQmJXIvUuc-",
   "ZjeaVq1YbEBq",
   "_Rcb1waqTKJq",
   "a7nxwhkjaPU9",
+  "ajf3IVeUpAsf",
   "b-x9irdrEFU4",
   "cIslF3jduYBX",
   "eZGKs6zrBFfI",
@@ -69,6 +72,7 @@
   "wM78V2wY-bNY",
   "wpqlfV2mxL0Q",
   "xaDUm1N6zecJ",
+  "xc1hC0_eIszV",
   "yhcNZi5P4Gde"
  ],
  "seen_events": [
@@ -102,10 +106,31 @@
   "{\"at\": \"2026-11-02T10:42:50.858Z\", \"kind\": \"alpha\", \"points\": 1, \"ref\": \"alpha:entry:1254\"}",
   "{\"at\": \"2026-11-02T11:01:58.822Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:MW8TD44ykWIp\"}",
   "{\"at\": \"2026-11-02T11:29:36.520Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:bICc3EMFlGo-\"}",
-  "{\"at\": \"2026-11-02T12:00:16.507Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:RTksFO01VfNw\"}"
+  "{\"at\": \"2026-11-02T12:00:16.507Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:RTksFO01VfNw\"}",
+  "{\"at\": \"2026-11-02T13:52:46.395Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:11913\"}",
+  "{\"at\": \"2026-11-02T13:52:55.406Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:623\"}",
+  "{\"at\": \"2026-11-02T13:53:38.087Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:1002\"}",
+  "{\"at\": \"2026-11-02T13:53:40.141Z\", \"kind\": \"vote\", \"points\": -3, \"ref\": \"vote:post:BSkhdNb9nGZH:11913\"}",
+  "{\"at\": \"2026-11-02T13:53:50.177Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:2799\"}",
+  "{\"at\": \"2026-11-02T13:54:13.205Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:1314\"}",
+  "{\"at\": \"2026-11-02T13:54:23.746Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:11913\"}",
+  "{\"at\": \"2026-11-02T13:54:29.060Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:13897\"}",
+  "{\"at\": \"2026-11-02T13:54:37.429Z\", \"kind\": \"reply\", \"points\": 1, \"ref\": \"reply:BSkhdNb9nGZH:11913\"}",
+  "{\"at\": \"2026-11-02T13:55:54.963Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:2028\"}",
+  "{\"at\": \"2026-11-02T13:55:55.136Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:3750\"}",
+  "{\"at\": \"2026-11-02T13:58:34.578Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:10265\"}",
+  "{\"at\": \"2026-11-02T13:58:58.501Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:12615\"}",
+  "{\"at\": \"2026-11-02T14:00:13.741Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:ajf3IVeUpAsf\"}",
+  "{\"at\": \"2026-11-02T14:01:17.929Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:xc1hC0_eIszV\"}",
+  "{\"at\": \"2026-11-02T14:02:38.089Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:1896\"}",
+  "{\"at\": \"2026-11-02T14:05:41.575Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:10757\"}",
+  "{\"at\": \"2026-11-02T14:09:13.983Z\", \"kind\": \"vote\", \"points\": -3, \"ref\": \"vote:post:BSkhdNb9nGZH:13715\"}",
+  "{\"at\": \"2026-11-02T14:09:29.725Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:13715\"}",
+  "{\"at\": \"2026-11-02T14:09:52.268Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:3909\"}"
  ],
  "seen_posts": [
   "8lZ_z52qG4WD",
+  "BSkhdNb9nGZH",
   "Fe9Wj1FzMpZ1",
   "IjmL-hBYb6gr",
   "Uhn3w4JA24b-",
