@@ -101,9 +101,14 @@ def main():
     seen_events = set(state.get("seen_events", []))
     posted = 0
 
-    # 1) our posts
+    # 1) our posts — if the core fetch fails (transient network/Cloudflare),
+    # abort WITHOUT touching state: an empty read must never be mistaken
+    # for a baseline, or the next good run would flood the channel.
     resp = api(f"/posts?author={ACCOUNT}&limit=12")
-    posts = resp.get("posts", []) if isinstance(resp, dict) else []
+    if not isinstance(resp, dict) or "posts" not in resp:
+        print(f"ABORT: posts fetch failed: {str(resp)[:200]}", file=sys.stderr)
+        return 1
+    posts = resp.get("posts", [])
     own_ids = []
     for p in posts:
         pid = p.get("id")
@@ -142,23 +147,24 @@ def main():
                         url=f"https://boltbook.fun/p/{pid}", color=0x6A1B9A)
             posted += 1
 
-    # 3+4) settlements + point events
+    # 3+4) settlements (from the public /rewards programme state) + point events
     me = api("/rewards/me")
-    if isinstance(me, dict) and me:
-        prog = (me.get("programme") or {})
-        last_day = ((prog.get("last_day") or {}).get("day"))
+    pub = api("/rewards")
+    if isinstance(pub, dict) and pub:
+        ld = ((pub.get("programme") or {}).get("last_day") or {})
+        last_day = ld.get("day")
         if last_day is not None and state.get("last_settlement_day") != last_day:
             if state.get("last_settlement_day") is not None:
-                ld = prog.get("last_day") or {}
+                fields = [{"name": "Total points", "value": str(ld.get("total_points", "?")), "inline": True},
+                          {"name": "Pool paid (BOLT)", "value": str(ld.get("paid", "?"))[:60], "inline": True}]
+                if isinstance(me, dict) and me:
+                    fields += [{"name": "Earned (total)", "value": str(me.get("earned", "?"))[:60], "inline": True},
+                               {"name": "Claimable", "value": str(me.get("claimable", "?"))[:60], "inline": True}]
                 discord("🏦 BOLT settlement landed",
-                        f"Programme day {last_day} settled.",
-                        color=0xEF6C00,
-                        fields=[{"name": "Total points", "value": str(ld.get("total_points", "?")), "inline": True},
-                                {"name": "Pool paid (BOLT)", "value": str(ld.get("paid", "?")), "inline": True},
-                                {"name": "Earned (total)", "value": str(me.get("earned", "?")), "inline": True},
-                                {"name": "Claimable", "value": str(me.get("claimable", "?")), "inline": True}])
+                        f"Programme day {last_day} settled.", color=0xEF6C00, fields=fields)
                 posted += 1
             state["last_settlement_day"] = last_day
+    if isinstance(me, dict) and me:
         for ev in me.get("recent_points", []) or []:
             key_ev = json.dumps(ev, sort_keys=True)
             if key_ev in seen_events:
@@ -166,17 +172,18 @@ def main():
             seen_events.add(key_ev)
             if baseline and not backfill:
                 continue
-            reason = str(ev.get("reason") or ev.get("type") or "")
+            reason = str(ev.get("kind") or ev.get("reason") or ev.get("type") or "")
             if "alpha" in reason.lower():
                 discord("📚 Alphapedia activity",
-                        f"{reason} — points: {ev.get('points', '?')}", color=0x00838F)
+                        f"{reason} — points: {ev.get('points', '?')} · ref: {ev.get('ref', '')}",
+                        color=0x00838F)
                 posted += 1
 
     # 5) follow counts
     prof = api("/agents/me")
     if isinstance(prof, dict):
         prof = prof.get("agent") or prof.get("profile") or prof
-        fc, fw = prof.get("following_count"), prof.get("followers_count")
+        fc, fw = prof.get("following_count"), prof.get("follower_count")
         old = state.get("counts") or {}
         if old and (fc != old.get("following") or fw != old.get("followers")):
             discord("👥 Follow counts changed",
