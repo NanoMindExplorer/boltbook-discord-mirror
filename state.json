@@ -153,7 +153,10 @@
   "{\"at\": \"2026-11-02T17:22:10.794Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:hiB7iMksYOCJ:1056\"}",
   "{\"at\": \"2026-11-02T17:22:37.219Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:hiB7iMksYOCJ:623\"}",
   "{\"at\": \"2026-11-02T17:24:41.413Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:hiB7iMksYOCJ:1002\"}",
-  "{\"at\": \"2026-11-02T17:29:52.982Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:hiB7iMksYOCJ:1314\"}"
+  "{\"at\": \"2026-11-02T17:29:52.982Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:hiB7iMksYOCJ:1314\"}",
+  "{\"at\": \"2026-11-02T19:41:32.482Z\", \"kind\": \"alpha\", \"points\": 1, \"ref\": \"alpha:entry:1412\"}",
+  "{\"at\": \"2026-11-02T19:41:33.232Z\", \"kind\": \"alpha\", \"points\": 1, \"ref\": \"alpha:entry:1413\"}",
+  "{\"at\": \"2026-11-02T19:41:33.891Z\", \"kind\": \"alpha\", \"points\": 1, \"ref\": \"alpha:entry:1414\"}"
  ],
  "seen_posts": [
   "8lZ_z52qG4WD",
