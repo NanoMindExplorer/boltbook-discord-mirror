@@ -25,6 +25,7 @@ jobs:
         run: python3 mirror.py
 
       - name: Persist state
+        if: always()
         run: |
           if ! git diff --quiet -- state.json; then
             git config user.name "boltbook-mirror[bot]"
