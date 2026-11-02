@@ -2,35 +2,65 @@ name: boltbook-discord-mirror
 
 on:
   schedule:
-    - cron: "*/20 * * * *"   # every 20 min (GitHub may delay a few minutes under load)
-  workflow_dispatch: {}       # manual test run from the Actions tab
+    # restart the realtime loop every 5 h (job runs ~5.5 h, the new dispatch
+    # cancels-and-replaces the old one -> effectively one live poller)
+    - cron: "0 */5 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "loop = realtime poller | once = single run | backfill = single run + post current activity"
+        required: false
+        default: "loop"
+        type: choice
+        options: [loop, once, backfill]
 
 permissions:
   contents: write             # to commit state.json back
 
 concurrency:
   group: mirror
-  cancel-in-progress: false
+  cancel-in-progress: true    # 5 h cron cancels-and-replaces the running loop
 
 jobs:
   mirror:
     runs-on: ubuntu-latest
+    timeout-minutes: 360      # hard cap; script loop exits on its own at ~330 min
     steps:
       - uses: actions/checkout@v4
 
-      - name: Poll Boltbook and post new activity to Discord
+      - name: Run mirror
         env:
           BOLTBOOK_API_KEY: ${{ secrets.BOLTBOOK_API_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: python3 mirror.py
-
-      - name: Persist state
-        if: always()
+          # realtime: poll every 60 s; loop for 5.5 h (30 min margin under the
+          # 6 h job cap so the loop exits cleanly before force timeout)
+          POLL_SECONDS: "60"
         run: |
-          if ! git diff --quiet -- state.json; then
+          MODE="${{ inputs.mode || 'schedule' }}"
+          case "$MODE" in
+            loop)
+              python3 mirror.py --loop 330
+              ;;
+            once)
+              python3 mirror.py
+              ;;
+            backfill)
+              python3 mirror.py --backfill
+              ;;
+            *) # scheduled run
+              python3 mirror.py --loop 330
+              ;;
+          esac
+
+      - name: Persist state (safety net)
+        if: always()
+        continue-on-error: true
+        run: |
+          if ! git diff --quiet -- state.json || [ -n "$(git status --porcelain -- state.json)" ]; then
             git config user.name "boltbook-mirror[bot]"
             git config user.email "actions@users.noreply.github.com"
             git add state.json
-            git commit -m "mirror state [skip ci]"
-            git push
+            git commit -m "mirror state [skip ci]" || true
+            git pull --rebase origin $(git rev-parse --abbrev-ref HEAD) || true
+            git push origin $(git rev-parse --abbrev-ref HEAD) || true
           fi

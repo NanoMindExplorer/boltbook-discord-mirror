@@ -1,30 +1,36 @@
 #!/usr/bin/env python3
 """Boltbook -> Discord activity mirror for the account nanomind.
 
-Polls the Boltbook API for new activity and posts one Discord embed per
-event to a channel webhook. State lives in state.json next to this file
-(the GitHub Actions workflow commits it back after each run).
+Two runtime modes:
+
+  --loop <minutes>   Long-lived loop used by GitHub Actions "realtime" mode:
+                     polls the Boltbook API every POLL_SECONDS (default 60),
+                     immediately relaying new activity to Discord, and
+                     commits state.json back to the repo whenever it changed.
+                     Designed to run ~5.5 h per Actions job with a cron
+                     restarting it (cancel-and-replace) every 5 h.
+
+  (default / --once) Single poll-and-post pass (cron / manual dispatch).
 
 Sources polled:
   1. Our published posts            GET /posts?author=nanomind
   2. Comments on our recent posts   GET /posts/<id>/comments?sort=new
      (both comments we receive and our own replies there)
   3. Settlements                    GET /rewards (programme.last_day)
-                                    + GET /rewards/me (earned / claimable)
+                                     + GET /rewards/me (earned / claimable)
   4. Alphapedia point events        GET /rewards/me (recent_points)
   5. Follow counts                  GET /agents/me (deltas only)
 
 Delivery discipline (hardened 2026-11-02 after a dead webhook token was
 counted as "posted"): an item enters the seen-state ONLY after its embed
 was actually accepted by Discord (HTTP 200/204). Any failed delivery
-leaves the item unseen so the next run retries it, and the run exits 1
-when at least one delivery failed, so failures are visible in Actions.
+leaves the item unseen so the next poll retries it.
 
 First run (empty state) records a baseline and posts a single
 "mirror connected" embed instead of flooding the channel with history.
 Pass --backfill to also post the currently visible recent events.
 
-Env: BOLTBOOK_API_KEY, DISCORD_WEBHOOK_URL
+Env: BOLTBOOK_API_KEY, DISCORD_WEBHOOK_URL, optional POLL_SECONDS.
 """
 import json, os, subprocess, sys, time, urllib.request, urllib.error
 
@@ -34,18 +40,20 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 STATE_PATH = os.path.join(HERE, "state.json")
 KEY = os.environ.get("BOLTBOOK_API_KEY", "")
 WEBHOOK = os.environ.get("DISCORD_WEBHOOK_URL", "")
+POLL_SECONDS = int(os.environ.get("POLL_SECONDS", "60"))
 
 POSTED = 0
 FAILED = 0
 
 
-def http(method, url, headers=None, payload=None):
-    cmd = ["curl", "-s", "-X", method, url]
+def http(method, url, headers=None, payload=None, timeout=45):
+    cmd = ["curl", "-sS", "--max-time", str(timeout), "--retry", "2",
+           "--retry-delay", "2", "-X", method, url]
     for k, v in (headers or {}).items():
         cmd += ["-H", f"{k}: {v}"]
     if payload is not None:
         cmd += ["-H", "Content-Type: application/json", "-d", json.dumps(payload)]
-    out = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+    out = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout + 15)
     try:
         return json.loads(out.stdout)
     except Exception:
@@ -74,7 +82,7 @@ def discord(title, description, url=None, color=0x2E7D32, fields=None):
         embed["fields"] = fields[:10]
     body = {"username": "nanomind.ai", "embeds": [embed]}
     data = json.dumps(body).encode()
-    for attempt in range(2):
+    for attempt in range(3):
         req = urllib.request.Request(WEBHOOK, data=data,
                                      headers={"Content-Type": "application/json",
                                               "User-Agent": "boltbook-discord-mirror"})
@@ -84,7 +92,10 @@ def discord(title, description, url=None, color=0x2E7D32, fields=None):
                     POSTED += 1
                     return True
         except urllib.error.HTTPError as e:
-            if e.code == 429 and attempt == 0:
+            if e.code == 429 and attempt < 2:
+                time.sleep(2 + attempt * 3)
+                continue
+            if e.code in (500, 502, 503, 504) and attempt < 2:
                 time.sleep(3)
                 continue
             print(f"Discord delivery failed: HTTP {e.code} for '{title[:60]}'",
@@ -103,15 +114,49 @@ def flatten_comments(nodes, out):
     return out
 
 
-def main():
-    backfill = "--backfill" in sys.argv
-    if not KEY or not WEBHOOK:
-        print("BOLTBOOK_API_KEY / DISCORD_WEBHOOK_URL not set", file=sys.stderr)
-        return 2
+def save_state(state):
+    """Atomic write so a cancelled job never leaves a truncated state.json."""
+    tmp = STATE_PATH + ".tmp"
+    with open(tmp, "w") as f:
+        json.dump(state, f, indent=1, sort_keys=True)
+    os.replace(tmp, STATE_PATH)
+
+
+def commit_state():
+    """Commit+push state.json if its content changed. Best-effort in-loop:
+    a lost push only means the state restarts from the last good commit,
+    at most re-checking one poll window worth of ids."""
+    r = subprocess.run(["git", "status", "--porcelain", "--", "state.json"],
+                       cwd=HERE, capture_output=True, text=True)
+    if not r.stdout.strip():
+        return False
+    subprocess.run(["git", "add", "state.json"], cwd=HERE, capture_output=True)
+    head = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"],
+                          cwd=HERE, capture_output=True, text=True).stdout.strip()
+    subprocess.run(["git", "commit", "-m", "mirror state [skip ci]"],
+                   cwd=HERE, capture_output=True)
+    ok = subprocess.run(["git", "push", "origin", head], cwd=HERE,
+                        capture_output=True, text=True)
+    if ok.returncode != 0:
+        # someone pushed meanwhile (e.g. a leftover dispatch) -> rebase and retry
+        subprocess.run(["git", "pull", "--rebase", "origin", head], cwd=HERE,
+                       capture_output=True)
+        subprocess.run(["git", "push", "origin", head], cwd=HERE,
+                       capture_output=True)
+    return True
+
+
+def run_once(backfill=False, baseline=False):
+    """One full poll pass. Returns state dict with freshly updated seen-sets;
+    never saves/commits itself."""
     state = {}
     if os.path.exists(STATE_PATH):
-        state = json.load(open(STATE_PATH))
-    baseline = not state.get("initialized")
+        try:
+            state = json.load(open(STATE_PATH))
+        except Exception:
+            state = {}
+    if not state.get("initialized"):
+        baseline = True
     seen_posts = set(state.get("seen_posts", []))
     seen_comments = set(state.get("seen_comments", []))
     seen_events = set(state.get("seen_events", []))
@@ -122,9 +167,10 @@ def main():
     resp = api(f"/posts?author={ACCOUNT}&limit=12")
     if not isinstance(resp, dict) or "posts" not in resp:
         print(f"ABORT: posts fetch failed: {str(resp)[:200]}", file=sys.stderr)
-        return 1
+        return state, False
     posts = resp.get("posts", [])
     own_ids = []
+    failed_delivery = False
     for p in posts:
         pid = p.get("id")
         if not pid:
@@ -145,6 +191,8 @@ def main():
                             "value": f"{p.get('upvotes', 0)} / {p.get('comment_count', 0)}",
                             "inline": True}]):
             seen_posts.add(pid)
+        else:
+            failed_delivery = True
 
     # 2) comments on our posts (received + our replies)
     for pid in own_ids[:10]:
@@ -170,6 +218,8 @@ def main():
                 continue
             if ok:
                 seen_comments.add(cid)
+            else:
+                failed_delivery = True
 
     # 3+4) settlements (public /rewards programme state) + Alphapedia events
     me = api("/rewards/me")
@@ -189,6 +239,8 @@ def main():
                 if discord("🏦 BOLT settlement landed",
                            f"Programme day {last_day} settled.", color=0xEF6C00, fields=fields):
                     state["last_settlement_day"] = last_day
+                else:
+                    failed_delivery = True
     if isinstance(me, dict) and me:
         for ev in me.get("recent_points", []) or []:
             key_ev = json.dumps(ev, sort_keys=True)
@@ -217,10 +269,12 @@ def main():
                        f"Following: {old.get('following')} → {fc} · Followers: {old.get('followers')} → {fw}",
                        color=0x455A64):
                 state["counts"] = {"following": fc, "followers": fw}
+            else:
+                failed_delivery = True
         elif fc is not None or fw is not None:
             state["counts"] = {"following": fc, "followers": fw}
 
-    if baseline:
+    if baseline and not failed_delivery:
         if discord("🔗 Boltbook mirror connected",
                    "nanomind's Boltbook activity will be documented in this channel: "
                    "posts, comments, settlements, Alphapedia activity and follow-count changes. "
@@ -232,7 +286,42 @@ def main():
     state["seen_posts"] = sorted(seen_posts)[-200:]
     state["seen_comments"] = sorted(seen_comments)[-800:]
     state["seen_events"] = sorted(seen_events)[-300:]
-    json.dump(state, open(STATE_PATH, "w"), indent=1, sort_keys=True)
+    return state, failed_delivery
+
+
+def main():
+    if not KEY or not WEBHOOK:
+        print("BOLTBOOK_API_KEY / DISCORD_WEBHOOK_URL not set", file=sys.stderr)
+        return 2
+
+    if "--loop" in sys.argv:
+        # realtime mode: poll every POLL_SECONDS for up to <minutes> of runtime
+        i = sys.argv.index("--loop")
+        minutes = float(sys.argv[i + 1]) if len(sys.argv) > i + 1 and sys.argv[i + 1].replace(".", "", 1).isdigit() else 330.0
+        deadline = time.time() + minutes * 60
+        cycle = 0
+        while time.time() < deadline:
+            cycle += 1
+            start = time.time()
+            state, failed_delivery = run_once()
+            if failed_delivery:
+                print(f"cycle {cycle}: delivery(s) failed — will retry next poll", file=sys.stderr)
+            save_state(state)
+            commit_state()
+            print(f"cycle {cycle}: {POSTED} posted / {FAILED} failed so far", flush=True)
+            # cadence measured from cycle start, so a slow poll never skips a beat
+            pause = POLL_SECONDS - (time.time() - start)
+            eta = min(pause, deadline - time.time())
+            if eta > 0:
+                time.sleep(eta)
+            else:
+                break
+        print(f"loop done after {cycle} poll cycle(s)")
+        return 1 if FAILED else 0
+
+    backfill = "--backfill" in sys.argv
+    state, failed_delivery = run_once(backfill=backfill)
+    save_state(state)
     print(f"done: {POSTED} embed(s) delivered, {FAILED} failed; "
           f"posts tracked={len(state['seen_posts'])}, comments tracked={len(state['seen_comments'])}")
     return 1 if FAILED else 0
