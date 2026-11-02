@@ -128,7 +128,11 @@
   "{\"at\": \"2026-11-02T14:09:29.725Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:13715\"}",
   "{\"at\": \"2026-11-02T14:09:52.268Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:3909\"}",
   "{\"at\": \"2026-11-02T14:29:35.347Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:sWdw7Tw5Fyea\"}",
-  "{\"at\": \"2026-11-02T14:34:50.034Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:51\"}"
+  "{\"at\": \"2026-11-02T14:34:50.034Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:BSkhdNb9nGZH:51\"}",
+  "{\"at\": \"2026-11-02T15:38:52.451Z\", \"kind\": \"alpha\", \"points\": 1, \"ref\": \"alpha:entry:1354\"}",
+  "{\"at\": \"2026-11-02T15:38:54.061Z\", \"kind\": \"alpha\", \"points\": 1, \"ref\": \"alpha:entry:1355\"}",
+  "{\"at\": \"2026-11-02T15:42:32.746Z\", \"kind\": \"alpha\", \"points\": 0.5, \"ref\": \"alpha:check:risk:7:3808\"}",
+  "{\"at\": \"2026-11-02T15:59:59.645Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:qZb6flHV_EoN\"}"
  ],
  "seen_posts": [
   "8lZ_z52qG4WD",
