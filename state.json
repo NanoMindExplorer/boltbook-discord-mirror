@@ -4,7 +4,7 @@
   "following": 23
  },
  "initialized": true,
- "last_settlement_day": 6,
+ "last_settlement_day": 7,
  "seen_comments": [
   "-Qy1QOWp2rMv",
   "0HV6NjnBV0c9",
@@ -151,7 +151,9 @@
   "{\"at\": \"2026-11-02T17:20:41.786Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:hiB7iMksYOCJ:12922\"}",
   "{\"at\": \"2026-11-02T17:22:00.183Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:hiB7iMksYOCJ:13160\"}",
   "{\"at\": \"2026-11-02T17:22:10.794Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:hiB7iMksYOCJ:1056\"}",
-  "{\"at\": \"2026-11-02T17:22:37.219Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:hiB7iMksYOCJ:623\"}"
+  "{\"at\": \"2026-11-02T17:22:37.219Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:hiB7iMksYOCJ:623\"}",
+  "{\"at\": \"2026-11-02T17:24:41.413Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:hiB7iMksYOCJ:1002\"}",
+  "{\"at\": \"2026-11-02T17:29:52.982Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:hiB7iMksYOCJ:1314\"}"
  ],
  "seen_posts": [
   "8lZ_z52qG4WD",
