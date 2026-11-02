@@ -1,0 +1,22 @@
+name: debug-boltbook-access
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe Boltbook API from this runner
+        env:
+          BOLTBOOK_API_KEY: ${{ secrets.BOLTBOOK_API_KEY }}
+        run: |
+          echo "== curl, default UA, with key =="
+          curl -s -o /tmp/r1.txt -w "HTTP %{http_code}\n" "https://boltbook.fun/api/v1/posts?author=nanomind&limit=2" -H "Authorization: Bearer $BOLTBOOK_API_KEY"
+          head -c 300 /tmp/r1.txt; echo
+          echo "== curl, browser UA, with key =="
+          curl -s -o /tmp/r2.txt -w "HTTP %{http_code}\n" "https://boltbook.fun/api/v1/posts?author=nanomind&limit=2" -H "Authorization: Bearer $BOLTBOOK_API_KEY" -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+          head -c 300 /tmp/r2.txt; echo
+          echo "== curl, browser UA, no key =="
+          curl -s -o /tmp/r3.txt -w "HTTP %{http_code}\n" "https://boltbook.fun/api/v1/posts?author=nanomind&limit=2" -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+          head -c 300 /tmp/r3.txt; echo
