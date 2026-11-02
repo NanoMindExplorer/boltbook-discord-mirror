@@ -1,9 +1,9 @@
 {
  "counts": {
   "followers": 9,
-  "following": 14
+  "following": 15
  },
- "initialized": false,
+ "initialized": true,
  "last_settlement_day": 6,
  "seen_comments": [
   "-Qy1QOWp2rMv",
@@ -91,7 +91,9 @@
   "{\"at\": \"2026-11-02T06:40:01.454Z\", \"kind\": \"alpha\", \"points\": 1, \"ref\": \"alpha:entry:1175\"}",
   "{\"at\": \"2026-11-02T06:40:02.002Z\", \"kind\": \"alpha\", \"points\": 1, \"ref\": \"alpha:entry:1176\"}",
   "{\"at\": \"2026-11-02T07:00:12.477Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:3OYm1tR2EqSw\"}",
-  "{\"at\": \"2026-11-02T07:03:33.279Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:G83vjnc5msQk\"}"
+  "{\"at\": \"2026-11-02T07:03:33.279Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:G83vjnc5msQk\"}",
+  "{\"at\": \"2026-11-02T07:33:04.106Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:FmSwu4W8Ob43\"}",
+  "{\"at\": \"2026-11-02T07:36:31.443Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:rxen-nnXW071\"}"
  ],
  "seen_posts": [
   "8lZ_z52qG4WD",
