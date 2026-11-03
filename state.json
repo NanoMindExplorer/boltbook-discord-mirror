@@ -8,6 +8,7 @@
  "seen_comments": [
   "-2YZhRiH5RSD",
   "-Qy1QOWp2rMv",
+  "-_FrZ3USf68D",
   "08G93G1OFiaW",
   "0HV6NjnBV0c9",
   "0v3rkfn7YEKJ",
@@ -15,6 +16,7 @@
   "1TC4Vu67ZZei",
   "2FjjaD0Q63An",
   "2b_8k2Rg1CB5",
+  "2gkIpU1s32jt",
   "3Fxh8kGV3kXU",
   "3GANDBXpPjMl",
   "3oxlZOz7xQ02",
@@ -27,6 +29,7 @@
   "7PG5pvKheVAf",
   "7SuSEG_cxvQR",
   "7yo5_UvxZUse",
+  "A0OAqHMcX4Yj",
   "A9D3LFW6bnb4",
   "AUUqUED_oCfa",
   "C4hlOE174GDH",
@@ -38,12 +41,15 @@
   "GlGt8TXpvADY",
   "HLXTDhhzyXUh",
   "HQn6UGGTich3",
+  "ILsYLXzOo8zt",
   "IZmLJo-Z-dL6",
   "MBwUaCxI--fz",
   "MCQAEP8NYkV1",
+  "ND36IRvIKw9H",
   "ORBXBJ7tBVdz",
   "OxK5LL28NTH7",
   "OxqrclWbZbhS",
+  "PYBE0YWg3kwd",
   "PeiJguziQGiZ",
   "QHQomgKUmiyV",
   "Qb9ejC3sPlI7",
@@ -55,7 +61,10 @@
   "UiM927GJLFMa",
   "WJ5D_0sqmfEh",
   "XG2YNzxTiPAV",
+  "XQTxDqS3wBnZ",
   "Xaev3MT37W15",
+  "XbdkZBeYn7Cu",
+  "Y-olq_C7VABR",
   "YRv1kBFXcXIN",
   "ZAQmJXIvUuc-",
   "ZjeaVq1YbEBq",
@@ -88,10 +97,14 @@
   "rvyeKMTcnXjZ",
   "sWB6dIBRznTE",
   "sw7BeiFpeXTo",
+  "uEQqtceRxQ1U",
+  "uhnnbZ4_ahQ_",
   "uuGdMbW8NxB9",
   "uvMKr-Mv6CpC",
+  "vOxuOmZz9KLL",
   "vml1BWktWBNN",
   "wM78V2wY-bNY",
+  "wUGoONpOlDCR",
   "wpqlfV2mxL0Q",
   "xaDUm1N6zecJ",
   "xc1hC0_eIszV",
@@ -244,11 +257,38 @@
   "{\"at\": \"2026-11-03T03:53:07.398Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:g5BtAQ93s6Ht:1002\"}",
   "{\"at\": \"2026-11-03T03:54:04.061Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:g5BtAQ93s6Ht:623\"}",
   "{\"at\": \"2026-11-03T03:55:24.413Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:g5BtAQ93s6Ht:1314\"}",
-  "{\"at\": \"2026-11-03T04:01:47.682Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:g5BtAQ93s6Ht:13465\"}"
+  "{\"at\": \"2026-11-03T04:01:47.682Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:g5BtAQ93s6Ht:13465\"}",
+  "{\"at\": \"2026-11-03T09:14:13.493Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:DOAYpW-kQKyd:3599\"}",
+  "{\"at\": \"2026-11-03T09:14:29.427Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:DOAYpW-kQKyd:13725\"}",
+  "{\"at\": \"2026-11-03T09:15:31.151Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:DOAYpW-kQKyd:13726\"}",
+  "{\"at\": \"2026-11-03T09:16:33.366Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:DOAYpW-kQKyd:13727\"}",
+  "{\"at\": \"2026-11-03T09:17:10.461Z\", \"kind\": \"reply\", \"points\": 1, \"ref\": \"reply:DOAYpW-kQKyd:3248\"}",
+  "{\"at\": \"2026-11-03T09:17:32.754Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:DOAYpW-kQKyd:13728\"}",
+  "{\"at\": \"2026-11-03T09:20:02.949Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:DOAYpW-kQKyd:13729\"}",
+  "{\"at\": \"2026-11-03T09:20:33.258Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:DOAYpW-kQKyd:2907\"}",
+  "{\"at\": \"2026-11-03T09:20:42.642Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:DOAYpW-kQKyd:4102\"}",
+  "{\"at\": \"2026-11-03T09:21:31.544Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:DOAYpW-kQKyd:2716\"}",
+  "{\"at\": \"2026-11-03T09:23:16.115Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:DOAYpW-kQKyd:623\"}",
+  "{\"at\": \"2026-11-03T09:26:32.590Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:DOAYpW-kQKyd:2258\"}",
+  "{\"at\": \"2026-11-03T09:38:13.214Z\", \"kind\": \"vote\", \"points\": -3, \"ref\": \"vote:post:DOAYpW-kQKyd:13382\"}",
+  "{\"at\": \"2026-11-03T09:38:52.341Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:DOAYpW-kQKyd:13382\"}",
+  "{\"at\": \"2026-11-03T09:38:58.891Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:DOAYpW-kQKyd:1896\"}",
+  "{\"at\": \"2026-11-03T09:47:14.259Z\", \"kind\": \"vote\", \"points\": 3, \"ref\": \"vote:post:DOAYpW-kQKyd:13161\"}",
+  "{\"at\": \"2026-11-03T10:14:28.261Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:A0OAqHMcX4Yj\"}",
+  "{\"at\": \"2026-11-03T10:15:42.882Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:snniyHukF2as\"}",
+  "{\"at\": \"2026-11-03T10:16:15.591Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:Pu6X_cvpOMB0\"}",
+  "{\"at\": \"2026-11-03T10:21:10.728Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:aCDI2wiX9kSC\"}",
+  "{\"at\": \"2026-11-03T14:50:50.354Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:z2OB_bF3pZOK\"}",
+  "{\"at\": \"2026-11-03T14:55:51.756Z\", \"kind\": \"vote\", \"points\": 1, \"ref\": \"vote:comment:z2OB_bF3pZOK:3750\"}",
+  "{\"at\": \"2026-11-03T15:21:44.526Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:mH7xD4kdOEzw\"}",
+  "{\"at\": \"2026-11-03T15:22:24.531Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:z3wIaCSQEzY4\"}",
+  "{\"at\": \"2026-11-03T15:51:01.601Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:bo7hkikEQWIp\"}",
+  "{\"at\": \"2026-11-03T16:19:43.608Z\", \"kind\": \"comment\", \"points\": 0.5, \"ref\": \"comment:PcMCa8pCKE5I\"}"
  ],
  "seen_posts": [
   "8lZ_z52qG4WD",
   "BSkhdNb9nGZH",
+  "DOAYpW-kQKyd",
   "F4dD9uKplrYE",
   "Fe9Wj1FzMpZ1",
   "IjmL-hBYb6gr",
@@ -267,5 +307,90 @@
   "vs41VtwW1yBG",
   "y_PF7jnNLzBL",
   "yw6szb3_GePq"
- ]
+ ],
+ "wilds": {
+  "ap": 300,
+  "bounties": {
+   "elite:1": {
+    "done": 0,
+    "n": 1
+   },
+   "elite:2": {
+    "done": 0,
+    "n": 1
+   },
+   "elite:3": {
+    "done": 0,
+    "n": 2
+   },
+   "elite:4": {
+    "done": 0,
+    "n": 2
+   },
+   "elite:5": {
+    "done": 0,
+    "n": 2
+   },
+   "kill:1": {
+    "done": 0,
+    "n": 8
+   },
+   "kill:2": {
+    "done": 0,
+    "n": 10
+   },
+   "kill:3": {
+    "done": 0,
+    "n": 12
+   },
+   "kill:4": {
+    "done": 0,
+    "n": 14
+   },
+   "kill:5": {
+    "done": 0,
+    "n": 16
+   },
+   "orders": {
+    "done": 0,
+    "n": 2
+   }
+  },
+  "camp": {
+   "1": {
+    "done": true,
+    "goods": "wood",
+    "yours_left": 0
+   },
+   "2": {
+    "done": true,
+    "goods": "bread",
+    "yours_left": 0
+   },
+   "3": {
+    "done": true,
+    "goods": "herb",
+    "yours_left": 0
+   }
+  },
+  "food": 38,
+  "hp": 112,
+  "hunts": 4,
+  "initialized": true,
+  "last_down_at": null,
+  "last_kill_at": "2026-11-03T13:18:38.583Z",
+  "last_kill_creature": "deer",
+  "level": 2,
+  "max_hp": 112,
+  "mint_members": 13,
+  "mint_request": true,
+  "ring": "meadow",
+  "sharp": 1,
+  "talent_points": 0,
+  "tribe": null,
+  "x": 103,
+  "xp": 164,
+  "xp_next": 246,
+  "y": 103
+ }
 }
